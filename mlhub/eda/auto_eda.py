@@ -28,15 +28,18 @@ option = st.sidebar.selectbox(
 # show the selected task
 st.title("{}".format(option))
 # upload a dataset
-uploaded_file = st.file_uploader("Choose a file")
+uploaded_file = st.file_uploader("Upload a dataset")
 # st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 # col2 = st.radio(label='',options=('Comedy', 'Drama', 'Documentary'))
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.success('Successfully loaded the file {}'.format(uploaded_file.name))
-    st.markdown("## Sample data")
+    st.subheader("Sample Data")
     st.write(df.head())
-    # st.write(df.info())
+    df_dtypes = pd.DataFrame(df.dtypes).reset_index()
+    df_dtypes.columns = ['column', 'dtype']
+    st.subheader("Data Types")
+    st.write(df_dtypes)
     left_column, right_column = st.beta_columns(2)
     # dtypes = ['boolean', 'integer', 'float', 'datetime64', 'string', 'category']
     # # dtype_option = st.selectbox('Select a dtype', dtypes)
